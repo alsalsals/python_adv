@@ -46,3 +46,10 @@ def test_users_response_size(app_url, users, size):
     response = requests.get(f'{app_url}/api/users?page=1&size={size}')
     assert response.status_code == HTTPStatus.OK
     assert len(response.json()['items']) == len(users)
+
+
+def test_users_different_pages(app_url):
+    response_first = requests.get(f'{app_url}/api/users?page=1&size=1')
+    response_second = requests.get(f'{app_url}/api/users?page=2&size=1')
+    assert response_first.status_code == HTTPStatus.OK
+    assert response_first.json()['items'] != response_second.json()['items']
