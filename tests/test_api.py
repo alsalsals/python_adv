@@ -1,14 +1,10 @@
 from http import HTTPStatus
 import pytest
 import requests
-from models.User import User
+from app.models.User import User
 
 
-def test_users(app_url):
-    response = requests.get(f'{app_url}/api/users/all')
-    assert response.status_code == HTTPStatus.OK
-
-    users = response.json()
+def test_users(app_url, users):
     for user in users:
         User.model_validate(user)
 

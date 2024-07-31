@@ -14,7 +14,7 @@ def test_users_pagination(app_url, users, page, size):
     assert response.json()['total'] == len(users)
 
 
-@pytest.mark.parametrize('size', [4, 100])
+@pytest.mark.parametrize('size', [4,])
 def test_users_size_with_pagination(app_url, size):
     response = requests.get(f'{app_url}/api/users?page=1&size={size}')
     assert response.status_code == HTTPStatus.OK

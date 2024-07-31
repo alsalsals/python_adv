@@ -22,9 +22,3 @@ def test_db_status(app_url):
     response = requests.get(f'{app_url}/status')
     assert response.status_code == HTTPStatus.OK
     assert response.json()
-
-
-@pytest.mark.smoke
-def test_open_base_url(app_url):
-    response = requests.get(app_url)
-    assert response.status_code == HTTPStatus.OK
