@@ -15,6 +15,7 @@ def test_users_pagination(app_url, users, page, size):
 
 
 @pytest.mark.parametrize('size', [4,])
+@pytest.mark.usefixtures('fill_test_data')
 def test_users_size_with_pagination(app_url, size):
     response = requests.get(f'{app_url}/api/users?page=1&size={size}')
     assert response.status_code == HTTPStatus.OK
