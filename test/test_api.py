@@ -4,15 +4,8 @@ import requests
 from models.User import User
 
 
-@pytest.fixture()
-def users(app_url):
-    response = requests.get(f'{app_url}/api/users/')
-    assert response.status_code == HTTPStatus.OK
-    return response.json()
-
-
 def test_users(app_url):
-    response = requests.get(f'{app_url}/api/users/')
+    response = requests.get(f'{app_url}/api/users/all')
     assert response.status_code == HTTPStatus.OK
 
     users = response.json()
@@ -27,7 +20,7 @@ def test_users_no_duplicates(users):
 
 @pytest.mark.parametrize("user_id", [1, 6, 12])
 def test_user(app_url, user_id):
-    response = requests.get(f'{app_url}/api/users/{user_id}')
+    response = requests.get(f'{app_url}/api/user/{user_id}')
     assert response.status_code == HTTPStatus.OK
 
     users = response.json()
@@ -36,11 +29,11 @@ def test_user(app_url, user_id):
 
 @pytest.mark.parametrize("user_id", [16,])
 def test_user_non_existent_value(app_url, user_id):
-    response = requests.get(f"{app_url}/api/users/{user_id}")
+    response = requests.get(f"{app_url}/api/user/{user_id}")
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
 @pytest.mark.parametrize("user_id", [-1, 0])
 def test_user_invalid_value(app_url, user_id):
-    response = requests.get(f"{app_url}/api/users/{user_id}")
+    response = requests.get(f"{app_url}/api/user/{user_id}")
     assert response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY
